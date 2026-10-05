@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Xse 桌面小部件元信息：2×2 格 -->
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="180dp"
+    android:minHeight="72dp"
+    android:targetCellWidth="3"
+    android:minResizeWidth="110dp"
+    android:updatePeriodMillis="1800000"
+    android:initialLayout="@layout/widget_energy"
+    android:previewImage="@drawable/widget_bg"
+    android:resizeMode="horizontal|vertical"
+    android:widgetCategory="home_screen" />

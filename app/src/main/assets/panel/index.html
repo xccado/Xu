@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Xse 远程面板</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#F6F7FB;color:#1B2231;padding:20px;max-width:720px;margin:0 auto}
+h1{font-size:22px;margin-bottom:2px}
+.sub{color:#7C5CFF;font-size:11px;letter-spacing:3px;font-weight:600;margin-bottom:16px}
+.card{background:#fff;border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 2px 10px rgba(30,40,80,.07)}
+.lbl{color:#535E73;font-size:13px}
+button{border:0;border-radius:12px;padding:12px 16px;font-size:15px;font-weight:600;cursor:pointer;width:100%;background:linear-gradient(135deg,#7C5CFF,#F56A8C);color:#fff;margin-top:8px}
+button.gray{background:#EEF1F6;color:#1B2231}
+input{width:100%;padding:12px;border:1px solid #E2E9F2;border-radius:12px;font-size:15px;margin:8px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{color:#7C5CFF;font-weight:600;padding:6px 4px}
+td{padding:7px 4px;text-align:center;border-top:1px solid #F0F2F7;font-variant-numeric:tabular-nums}
+td:first-child,th:first-child{text-align:left;color:#535E73}
+#log{background:#F6F8FC;border-radius:12px;padding:10px;font-size:11px;max-height:280px;overflow:auto;white-space:pre-wrap;margin-top:10px;font-family:monospace}
+.tabs{display:flex;gap:8px;margin:8px 0;flex-wrap:wrap}
+.tab{padding:7px 13px;border-radius:999px;background:#F0F2F7;font-size:13px;cursor:pointer;border:none}
+.tab.on{background:#7C5CFF;color:#fff}
+#msg{font-size:13px;color:#7C5CFF;min-height:18px;margin-top:6px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#ccc;margin-right:6px}
+.dot.on{background:#34C759}
+</style></head><body>
+<h1>Xse</h1>
+<div class="sub">NIGHT NEON · 远程面板</div>
+<div id="auth" class="card"><b>连接面板</b><br><span class="lbl">输入面板令牌（模块 HTTP 服务的 Bearer Token）</span>
+<input id="tk" type="password" placeholder="Token"><button onclick="save()">保存并连接</button><div id="msg"></div></div>
+<div id="main" style="display:none">
+<div class="card"><span id="st"><span class="dot"></span>加载中…</span><div class="sub" id="acct" style="margin-top:6px"></div></div>
+<div class="card"><b>能量统计</b><table id="tb"></table></div>
+<div class="card"><button onclick="act('execute','{}')">▶ 立即执行全部任务</button>
+<button class="gray" onclick="act('execute','{&quot;group&quot;:&quot;FOREST&quot;}')">只执行森林</button>
+<button class="gray" onclick="act('reload','{}')">重载配置</button><div id="msg2"></div></div>
+<div class="card"><b>日志</b><div class="tabs" id="tabs"></div><div id="log"></div></div>
+</div>
+<script>
+const NAMES={collected:'收取',helped:'帮收',watered:'浇水'};
+let TOKEN=localStorage.xseToken||'';
+function hget(u){return fetch(u,{headers:{Authorization:'Bearer '+TOKEN}})}
+async function jget(u){const r=await hget(u);if(r.status===401)throw new Error('token 无效');return r.json()}
+function hget2(){return null}
+async function jpost(u,b){const r=await fetch(u,{method:'POST',headers:{Authorization:'Bearer '+TOKEN,'Content-Type':'application/json'},body:b||'{}'});return r.json()}
+async function load(){try{
+const s=await jget('/panel/api/status');
+document.getElementById('auth').style.display='none';document.getElementById('main').style.display='';
+document.getElementById('st').innerHTML='<span class="dot" style="background:#34C759"></span>已激活 · 账号 '+(s.currentUser||'-')+'（共 '+s.userCount+' 个）';
+document.getElementById('acct').textContent='版本 '+s.version+' · 当前账号 '+(s.currentUser||'-');
+const st=await jget('/panel/api/statistics');
+let h='<tr><th></th><th>今日</th><th>本月</th><th>今年</th></tr>';
+for(const[lbl,k]of[['收取','collected'],['帮收','helped'],['浇水','watered']]){h+='<tr><td>'+lbl+'</td><td>'+st.day[k]+'</td><td>'+st.month[k]+'</td><td>'+st.year[k]+'</td></tr>'}
+document.getElementById('tb').innerHTML=h;
+}catch(e){document.getElementById('msg').textContent='连接失败: '+e.message}}
+function connect(){if(TOKEN)load()}
+// 日志页签初始化
+for(const n of['runtime','error','forest','farm','other','goldenbeans']){const b=document.createElement('button');b.className='tab'+(n==='runtime'?' on':'');b.dataset.n=n;b.textContent=NAMES[n]||n;b.onclick=()=>showLog(n);document.getElementById('tabs').appendChild(b)}
+function showLog(n){document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.n===n));
+jget('/panel/api/logs?name='+n+'&tail=300').then(d=>{document.getElementById('log').textContent=(d.lines||[]).join('\n')||'(空)'}).catch(()=>{})}
+async function act(path,body){try{const r=await jpost('/panel/api/'+path,body);document.getElementById('msg2').textContent=r.message||r.status}catch(e){document.getElementById('msg2').textContent='请求失败'}}
+function save(){TOKEN=document.getElementById('tk').value.trim();localStorage.xseToken=TOKEN;connect()}
+connect();
+</script></body></html>

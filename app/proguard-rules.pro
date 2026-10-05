@@ -1,127 +1,127 @@
-# Sure-Xu ProGuard Rules（修正版）
+# Xse ProGuard Rules（修正版）
 
 # ============================================================
 # 1. Xposed / libxposed
 # ============================================================
 -keep class io.github.libxposed.** { *; }
 -dontwarn io.github.libxposed.**
--keep class com.surexu.sesame.hook.ApplicationHook { *; }
--keepclassmembers class com.surexu.sesame.hook.ApplicationHook {
+-keep class com.xse.sesame.hook.ApplicationHook { *; }
+-keepclassmembers class com.xse.sesame.hook.ApplicationHook {
     public <init>(...);
 }
 -keep class * implements io.github.libxposed.api.XposedModule { *; }
 # 传统框架按 xposed_init 反射加载的入口类
--keep class com.surexu.sesame.hook.LegacyEntry { *; }
+-keep class com.xse.sesame.hook.LegacyEntry { *; }
 
 # ============================================================
 # 2. Model 系统
 # ============================================================
--keep class com.surexu.sesame.data.Model { *; }
--keep class com.surexu.sesame.data.ModelType { *; }
--keep class com.surexu.sesame.data.ModelGroup { *; }
--keep class com.surexu.sesame.data.ModelFields { *; }
--keep class com.surexu.sesame.data.ModelConfig { *; }
--keep class com.surexu.sesame.data.ModelField { *; }
--keep class com.surexu.sesame.data.modelFieldExt.** { *; }
--keepclassmembers class com.surexu.sesame.data.Model {
+-keep class com.xse.sesame.data.Model { *; }
+-keep class com.xse.sesame.data.ModelType { *; }
+-keep class com.xse.sesame.data.ModelGroup { *; }
+-keep class com.xse.sesame.data.ModelFields { *; }
+-keep class com.xse.sesame.data.ModelConfig { *; }
+-keep class com.xse.sesame.data.ModelField { *; }
+-keep class com.xse.sesame.data.modelFieldExt.** { *; }
+-keepclassmembers class com.xse.sesame.data.Model {
     public <init>(...);
 }
--keepclassmembers class com.surexu.sesame.data.modelFieldExt.** {
+-keepclassmembers class com.xse.sesame.data.modelFieldExt.** {
     public <init>(...);
 }
--keep class com.surexu.sesame.data.**$* { *; }
+-keep class com.xse.sesame.data.**$* { *; }
 
 # ============================================================
 # 3. data.task 包（反射实例化）
 # ============================================================
--keep class com.surexu.sesame.data.task.** { *; }
+-keep class com.xse.sesame.data.task.** { *; }
 
 # ============================================================
 # 4. 配置类（Jackson 序列化）
 # ============================================================
--keep class com.surexu.sesame.data.ConfigV2 { *; }
--keep class com.surexu.sesame.data.ConfigPreload { *; }
--keep class com.surexu.sesame.data.AppConfig { *; }
--keep class com.surexu.sesame.data.TokenConfig { *; }
--keepclassmembers class com.surexu.sesame.data.ConfigV2 {
+-keep class com.xse.sesame.data.ConfigV2 { *; }
+-keep class com.xse.sesame.data.ConfigPreload { *; }
+-keep class com.xse.sesame.data.AppConfig { *; }
+-keep class com.xse.sesame.data.TokenConfig { *; }
+-keepclassmembers class com.xse.sesame.data.ConfigV2 {
     public <init>(...);
 }
--keepclassmembers class com.surexu.sesame.data.AppConfig {
+-keepclassmembers class com.xse.sesame.data.AppConfig {
     public <init>(...);
 }
--keepclassmembers class com.surexu.sesame.data.TokenConfig {
+-keepclassmembers class com.xse.sesame.data.TokenConfig {
     public <init>(...);
 }
 
 # ============================================================
 # 5. 状态与统计
 # ============================================================
--keep class com.surexu.sesame.util.Status { *; }
--keep class com.surexu.sesame.util.Statistics { *; }
--keepclassmembers class com.surexu.sesame.util.Status {
+-keep class com.xse.sesame.util.Status { *; }
+-keep class com.xse.sesame.util.Statistics { *; }
+-keepclassmembers class com.xse.sesame.util.Status {
     public static ** INSTANCE;
 }
--keepclassmembers class com.surexu.sesame.util.Statistics {
+-keepclassmembers class com.xse.sesame.util.Statistics {
     public static ** INSTANCE;
 }
 
 # ============================================================
 # 6. RPC
 # ============================================================
--keep class com.surexu.sesame.hook.RpcRequest { *; }
--keep class com.surexu.sesame.hook.ServerCommon { *; }
--keep class com.surexu.sesame.hook.BaseHandler { *; }
--keep class com.surexu.sesame.rpc.bridge.* { *; }
--keepclassmembers class com.surexu.sesame.hook.RpcRequest {
+-keep class com.xse.sesame.hook.RpcRequest { *; }
+-keep class com.xse.sesame.hook.ServerCommon { *; }
+-keep class com.xse.sesame.hook.BaseHandler { *; }
+-keep class com.xse.sesame.rpc.bridge.* { *; }
+-keepclassmembers class com.xse.sesame.hook.RpcRequest {
     public <init>(...);
 }
 
 # ============================================================
 # 7. idMap
 # ============================================================
--keep class com.surexu.sesame.util.idMap.** { *; }
+-keep class com.xse.sesame.util.idMap.** { *; }
 
 # ============================================================
 # 8. Entity
 # ============================================================
--keep class com.surexu.sesame.entity.** { *; }
+-keep class com.xse.sesame.entity.** { *; }
 
 # ============================================================
 # 9. 扩展模块
 # ============================================================
--keep class com.surexu.sesame.model.extensions.** { *; }
--keepclassmembers class com.surexu.sesame.model.extensions.ExtensionsHandle {
+-keep class com.xse.sesame.model.extensions.** { *; }
+-keepclassmembers class com.xse.sesame.model.extensions.ExtensionsHandle {
     public static java.lang.Object handleAlphaRequest(java.lang.String, java.lang.String, java.lang.Object);
 }
 
 # ============================================================
 # 10. Hook 包（保持原有整包保留，避免反射调用崩溃）
 # ============================================================
--keep class com.surexu.sesame.hook.** { *; }
+-keep class com.xse.sesame.hook.** { *; }
 
 # ============================================================
 # 11. 工具类
 # ============================================================
--keep class com.surexu.sesame.util.XHelpers { *; }
--keep class com.surexu.sesame.util.compat.** { *; }
--keep class com.surexu.sesame.util.ClassUtil { *; }
--keep class com.surexu.sesame.util.FileUtil { *; }
--keep class com.surexu.sesame.util.Log { *; }
--keep class com.surexu.sesame.util.JsonUtil { *; }
--keep class com.surexu.sesame.util.TimeUtil { *; }
--keep class com.surexu.sesame.util.NotificationUtil { *; }
--keep class com.surexu.sesame.util.PermissionUtil { *; }
--keep class com.surexu.sesame.util.StringUtil { *; }
--keep class com.surexu.sesame.util.ThreadUtil { *; }
--keep class com.surexu.sesame.util.ToastUtil { *; }
--keep class com.surexu.sesame.util.TypeUtil { *; }
+-keep class com.xse.sesame.util.XHelpers { *; }
+-keep class com.xse.sesame.util.compat.** { *; }
+-keep class com.xse.sesame.util.ClassUtil { *; }
+-keep class com.xse.sesame.util.FileUtil { *; }
+-keep class com.xse.sesame.util.Log { *; }
+-keep class com.xse.sesame.util.JsonUtil { *; }
+-keep class com.xse.sesame.util.TimeUtil { *; }
+-keep class com.xse.sesame.util.NotificationUtil { *; }
+-keep class com.xse.sesame.util.PermissionUtil { *; }
+-keep class com.xse.sesame.util.StringUtil { *; }
+-keep class com.xse.sesame.util.ThreadUtil { *; }
+-keep class com.xse.sesame.util.ToastUtil { *; }
+-keep class com.xse.sesame.util.TypeUtil { *; }
 
 # ============================================================
 # 12. Model 实现类 / UI
 # ============================================================
--keep class com.surexu.sesame.model.** { *; }
--keep class com.surexu.sesame.ui.** { *; }
--keep class com.surexu.sesame.SesameApplication { *; }
+-keep class com.xse.sesame.model.** { *; }
+-keep class com.xse.sesame.ui.** { *; }
+-keep class com.xse.sesame.SesameApplication { *; }
 
 # ============================================================
 # 13. 通用：保留 Lombok 生成的 getter/setter（R8 可能误删）
@@ -162,8 +162,8 @@
 # ============================================================
 # 17. Sure-Xu 免 root 兼容层：modern / legacy 双入口与后端
 # ============================================================
--keep class com.surexu.sesame.hook.** { *; }
--keepclassmembers class com.surexu.sesame.hook.** {
+-keep class com.xse.sesame.hook.** { *; }
+-keepclassmembers class com.xse.sesame.hook.** {
     public <init>(...);
     public *;
 }
@@ -174,7 +174,7 @@
 # ============================================================
 # 18. miuix / Compose UI 入口
 # ============================================================
--keep class com.surexu.sesame.ui.** { *; }
--keepclassmembers class com.surexu.sesame.ui.** {
+-keep class com.xse.sesame.ui.** { *; }
+-keepclassmembers class com.xse.sesame.ui.** {
     public <init>(...);
 }

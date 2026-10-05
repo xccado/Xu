@@ -6,15 +6,15 @@
     <color name="main_button">#FFFFFF</color>
     <color name="main_button_pressed">#EDF3FA</color>
     <color name="main_button_text">#1B2231</color>
-    <color name="button">#2E6BFF</color>
-    <color name="button_pressed">#1B4FD8</color>
+    <color name="button">#7C5CFF</color>
+    <color name="button_pressed">#5A3ED8</color>
     <color name="button_text">#FFFFFF</color>
-    <color name="dashboard_item_1">#2E6BFF</color>
-    <color name="dashboard_item_2">#12B5A5</color>
+    <color name="dashboard_item_1">#7C5CFF</color>
+    <color name="dashboard_item_2">#F56A8C</color>
     <color name="dashboard_item_3">#E5484D</color>
     <color name="dashboard_item_4">#F5A524</color>
 
-    <color name="colorPrimary">#2E6BFF</color>
+    <color name="colorPrimary">#7C5CFF</color>
     <color name="textColorPrimary">#1B2231</color>
     <color name="textColorDisable">#BCC5D3</color>
     <color name="navigationBarColor">#00FFFFFF</color>

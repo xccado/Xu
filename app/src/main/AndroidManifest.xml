@@ -70,12 +70,29 @@
             android:name=".ui.MainActivityAlias"
             android:enabled="true"
             android:exported="true"
-            android:targetActivity="com.surexu.sesame.ui.miuix.MiuixMainActivity">
+            android:targetActivity="com.xse.sesame.ui.miuix.MiuixMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity-alias>
+
+        <activity
+            android:name=".ui.miuix.WebDavSettingsActivity"
+            android:exported="false" />
+
+        <receiver
+            android:name=".ui.widget.XseWidget"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.xse.sesame.status" />
+                <action android:name="com.xse.sesame.update" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_energy_info" />
+        </receiver>
 
         <provider
             android:name="androidx.core.content.FileProvider"

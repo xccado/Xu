@@ -5,7 +5,7 @@ android {
     def version = project.getProperties().get("version")
     if (version == null || "unspecified".equalsIgnoreCase(version)) {
         // 默认版本号；正式发布时由 CI 通过 -Pversion=<tag> 覆盖
-        version = "1.3.0"
+        version = "6.8.3"
     }
     project.ext.appVersion = version
     def gitCommitHash = "unknown"
@@ -25,9 +25,9 @@ android {
     def buildTime = new Date().format("yyyy-MM-dd HH:mm:ss", TimeZone.getTimeZone("Asia/Shanghai"))
 
     compileSdk 37
-    namespace 'com.surexu.sesame'
+    namespace 'com.xse.sesame'
     defaultConfig {
-        applicationId "com.surexu.sesame"
+        applicationId "com.xse.sesame"
         minSdk 26
         //noinspection ExpiredTargetSdkVersion
         targetSdk 34
@@ -43,7 +43,7 @@ android {
         compose = true
     }
     ext {
-        applicationName = "Sure-Xu"
+        applicationName = "Xse"
         applicationType = "Normal"
     }
 
@@ -117,7 +117,7 @@ androidComponents {
         variant.outputs.each { output ->
             def appType = 'Normal'
             // 单包通吃：仅 Sure-Xu-Normal-<version>.apk
-            output.outputFileName.set("Sure-Xu-${appType}-${project.appVersion}.apk")
+            output.outputFileName.set("Xse-${appType}-${project.appVersion}.apk")
         }
     }
 }

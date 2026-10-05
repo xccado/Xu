@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 小部件背景：纯白圆角 + 细描边（与主题同一套色调） -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="#F2FFFFFF" />
+    <corners android:radius="22dp" />
+    <stroke android:width="1dp" android:color="#E2E9F2" />
+</shape>
